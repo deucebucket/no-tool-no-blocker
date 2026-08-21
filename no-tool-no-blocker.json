@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "record_type": "project-scope",
+  "project": {
+    "id": "no-tool-no-blocker",
+    "name": "No Tool, No Blocker template",
+    "root": ".",
+    "domains": [
+      "software",
+      "research",
+      "art-pipeline",
+      "data",
+      "operations"
+    ],
+    "primary_goal": "Provide a reusable, project-scoped tool-gap protocol and validator."
+  },
+  "paths": {
+    "tool_inventory": "inventory/tools.json",
+    "gap_records": ["examples/*/gap-assessment.json", "gaps/*.json"],
+    "tool_proposals": ["examples/*/tool-proposal.json", "proposals/*.json"],
+    "operator_cards": ["examples/*/operator-card.json", "operator-cards/*.json"],
+    "evidence_receipts": ["examples/*/evidence-receipt.json", "evidence/*.json"],
+    "negative_knowledge": ["examples/*/negative-knowledge.json", "knowledge/negative/*.json"],
+    "return_receipts": ["examples/*/return-to-goal-receipt.json", "returns/*.json"]
+  },
+  "defaults": {
+    "hash_algorithm": "sha256",
+    "overwrite": false,
+    "network": false,
+    "max_runtime_seconds": 60,
+    "max_input_bytes": 1048576,
+    "max_concurrency": 1
+  }
+}

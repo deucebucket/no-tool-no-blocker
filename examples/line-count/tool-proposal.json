@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "record_type": "tool-proposal",
+  "id": "proposal-20260821-bounded-line-count",
+  "created_at": "2026-08-21T13:05:00Z",
+  "project_id": "no-tool-no-blocker",
+  "gap_id": "gap-20260821-bounded-line-count",
+  "parent_goal_id": "goal-worked-example",
+  "decision": "build",
+  "selected_approach": "Build one standard-library Python CLI that validates a byte cap and UTF-8, counts LF bytes, hashes the input, and creates deterministic JSON at a new path.",
+  "alternatives": [
+    {
+      "name": "Wrap GNU wc plus sha256sum in shell",
+      "rejected_because": "A Python implementation makes JSON serialization, strict UTF-8 validation, portable hashing, byte caps, and exclusive output creation one testable cross-platform contract."
+    },
+    {
+      "name": "Add a third-party CLI framework",
+      "rejected_because": "The standard library is sufficient and avoids installation and supply-chain cost."
+    }
+  ],
+  "success_condition": "Two clean runs over the pinned fixture produce byte-identical JSON with count 3; oversized and invalid UTF-8 inputs fail before output; an existing output is preserved with exit 4.",
+  "stop_conditions": [
+    "If input exceeds 1024 bytes in the evidence run, stop with exit 3 and revisit the parent fixture scope.",
+    "If standard-library behavior differs on a supported Python runtime, return the exact versioned discrepancy rather than widening the implementation."
+  ],
+  "safety": {
+    "read_roots": ["examples/line-count/fixtures"],
+    "write_roots": ["an operator-selected temporary directory", "examples/line-count/expected"],
+    "max_runtime_seconds": 5,
+    "max_input_bytes": 1024,
+    "max_concurrency": 1,
+    "network": false,
+    "overwrite": false
+  },
+  "deliverables": {
+    "implementation": "examples/line-count/tool/line_count.py",
+    "operator_card": "examples/line-count/operator-card.json",
+    "tests": ["tests/test_example_tool.py"],
+    "evidence_receipt": "examples/line-count/evidence-receipt.json",
+    "inventory": "inventory/tools.json"
+  },
+  "dependencies": ["Python 3.11 or newer standard library"],
+  "risks": [
+    "Operators may mistake LF byte count for a semantic line count.",
+    "An unbounded caller-selected value can still permit a large read; the operator card pins the evidence run to 1024 bytes."
+  ],
+  "nonclaims": [
+    "This proposal does not cover arbitrary encodings, streaming data, or semantic record parsing.",
+    "The implementation is not successful until tests, hashes, registration, and evidence are present."
+  ]
+}

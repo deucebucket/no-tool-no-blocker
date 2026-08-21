@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "record_type": "gap-assessment",
+  "id": "gap-20260821-bounded-line-count",
+  "created_at": "2026-08-21T13:00:00Z",
+  "project_id": "no-tool-no-blocker",
+  "parent_goal": {
+    "id": "goal-worked-example",
+    "objective": "Ship a complete small example of the tool-gap lifecycle.",
+    "acceptance_test": "A fresh clone can run one dependency-free tool, reproduce its expected output, validate its records, and pass focused tests.",
+    "return_artifact": "A registered line-count CLI with deterministic output and a linked evidence receipt."
+  },
+  "question": "Can a standard-library CLI deterministically count LF-delimited lines in this bounded UTF-8 fixture without overwriting an existing report?",
+  "required_capability": "bounded-utf8-lf-line-count-to-json",
+  "state": "absent",
+  "scope": {
+    "inputs": [
+      {
+        "path": "examples/line-count/fixtures/three-lines.txt",
+        "sha256": "27c9424d0d3a8a2ef3ec7eceb39c66a72bce9509489dab6d17b310d8cbaab8ef"
+      }
+    ],
+    "exclusions": [
+      "Semantic line definitions other than LF byte count.",
+      "Streaming inputs, directories, binary input, and files larger than 1024 bytes.",
+      "Performance claims beyond the one bounded fixture."
+    ],
+    "environment": "Python 3.11 or newer; standard library only; repository root as working directory.",
+    "max_runtime_seconds": 5,
+    "max_input_bytes": 1024,
+    "max_concurrency": 1,
+    "network": false
+  },
+  "inventory_search": {
+    "inventory_path": "inventory/tools.json",
+    "performed_at": "2026-08-21T13:00:00Z",
+    "commands": [
+      "python3 -c 'import json; print([t[\"id\"] for t in json.load(open(\"inventory/tools.json\"))[\"tools\"]])'",
+      "command -v wc",
+      "wc --version | head -n 1",
+      "wc --help"
+    ],
+    "paths": ["inventory/tools.json", "/usr/bin/wc"],
+    "candidates": [
+      {
+        "id": "system-wc-9.10",
+        "finding": "adjacent-but-insufficient: counts LF bytes but does not itself provide the required JSON, input SHA-256, caller-set byte bound, or new-file-only output contract"
+      }
+    ],
+    "conclusion": "At assessment time, no registered project tool answered the full scoped question; GNU wc 9.10 was adjacent but insufficient by itself.",
+    "limitations": [
+      "The search covered the declared inventory and the obvious system utility, not every executable installed on the host."
+    ]
+  },
+  "observations": [
+    "GNU wc 9.10 is callable on the assessment host.",
+    "The required output combines LF count, byte count, and input SHA-256 in stable JSON.",
+    "The required writer must refuse an existing output path."
+  ],
+  "nonclaims": [
+    "This historical assessment does not claim that the capability remains absent after the example tool is registered.",
+    "It does not claim GNU wc is broken or unsuitable for ordinary line counting.",
+    "It does not establish universal absence outside the recorded search scope."
+  ],
+  "escape_paths": [
+    {
+      "trigger": "A registered candidate gains all required output, bound, hash, and overwrite contracts.",
+      "action": "Reclassify the candidate as reusable or present-unwired and prefer it to a duplicate build."
+    }
+  ],
+  "status": "closed"
+}

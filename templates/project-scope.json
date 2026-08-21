@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "record_type": "project-scope",
+  "project": {
+    "id": "replace-project-id",
+    "name": "Replace project name",
+    "root": ".",
+    "domains": ["replace-domain"],
+    "primary_goal": "Replace with the project's primary goal."
+  },
+  "paths": {
+    "tool_inventory": "inventory/tools.json",
+    "gap_records": ["gaps/*.json"],
+    "tool_proposals": ["proposals/*.json"],
+    "operator_cards": ["operator-cards/*.json"],
+    "evidence_receipts": ["evidence/*.json"],
+    "negative_knowledge": ["knowledge/negative/*.json"],
+    "return_receipts": ["returns/*.json"]
+  },
+  "defaults": {
+    "hash_algorithm": "sha256",
+    "overwrite": false,
+    "network": false,
+    "max_runtime_seconds": 60,
+    "max_input_bytes": 1048576,
+    "max_concurrency": 1
+  }
+}

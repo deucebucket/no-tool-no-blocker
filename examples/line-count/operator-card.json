@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "record_type": "operator-card",
+  "tool_id": "tool-example-line-count",
+  "name": "bounded-line-count",
+  "version": "0.1.0",
+  "status": "active",
+  "implementation": {
+    "path": "examples/line-count/tool/line_count.py",
+    "sha256": "2a29cca9d7b74c70578777305a6369564eac43aa2641ff723fdcdf0d318f8349"
+  },
+  "purpose": "Count LF bytes in one bounded UTF-8 file and write byte count, LF count, and input SHA-256 as deterministic JSON.",
+  "answers_question": "Can a standard-library CLI deterministically count LF-delimited lines in this bounded UTF-8 fixture without overwriting an existing report?",
+  "runtime": {
+    "command": "python3",
+    "requirements": ["Python 3.11 or newer"],
+    "dependencies": ["Python standard library only"],
+    "network": false
+  },
+  "usage": {
+    "synopsis": "python3 examples/line-count/tool/line_count.py --input INPUT --output OUTPUT --max-bytes POSITIVE_INTEGER",
+    "working_directory": "repository root",
+    "examples": [
+      "tmp_dir=\"$(mktemp -d)\" && python3 examples/line-count/tool/line_count.py --input examples/line-count/fixtures/three-lines.txt --output \"$tmp_dir/report.json\" --max-bytes 1024",
+      "python3 examples/line-count/tool/line_count.py --help"
+    ]
+  },
+  "inputs": [
+    {
+      "name": "--input",
+      "format": "regular file",
+      "encoding": "strict UTF-8",
+      "mode": "read-only",
+      "limits": "Actual bytes must be no greater than --max-bytes; the evidence run uses 1024."
+    },
+    {
+      "name": "--max-bytes",
+      "format": "positive base-10 integer",
+      "encoding": "command-line text",
+      "mode": "read-only",
+      "limits": "Must be positive; controls the maximum read plus one detection byte."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "--output",
+      "format": "UTF-8 JSON with sorted keys, two-space indentation, and one terminal LF",
+      "creation": "new-file-only",
+      "deterministic": true
+    }
+  ],
+  "exit_codes": {
+    "0": "Report created successfully.",
+    "2": "Command-line usage error.",
+    "3": "Input missing, not a regular file, too large, changed beyond the bound, invalid UTF-8, or max-bytes non-positive.",
+    "4": "Output already exists; it was not overwritten.",
+    "5": "Output could not be created or written."
+  },
+  "resource_bounds": {
+    "max_runtime_seconds": 5,
+    "max_input_bytes": 1024,
+    "max_concurrency": 1
+  },
+  "side_effects": [
+    "Reads the explicit input.",
+    "On success, creates only the explicit output; on output I/O failure a partial newly created output may remain."
+  ],
+  "overwrite_policy": "refuse",
+  "determinism": "For identical input bytes, Python implementation bytes, and arguments, successful output bytes are identical; paths and timestamps are excluded from output.",
+  "provenance": "The report embeds the input SHA-256; the evidence receipt pins implementation, input, output, and supporting record hashes.",
+  "tests": ["tests/test_example_tool.py"],
+  "limitations": [
+    "The line count is the number of LF bytes. A final non-LF segment is not counted as another line.",
+    "The entire bounded input is held in memory.",
+    "Only strict UTF-8 regular files are accepted.",
+    "The tool does not create missing parent directories."
+  ],
+  "nonclaims": [
+    "A successful report does not prove semantic records, newline normalization, or support for other encodings.",
+    "The 1024-byte example bound is not a performance claim for larger caller-selected bounds."
+  ]
+}

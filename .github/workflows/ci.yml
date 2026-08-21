@@ -1,0 +1,47 @@
+{
+  "name": "CI",
+  "on": {
+    "push": {},
+    "pull_request": {},
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "jobs": {
+    "validate": {
+      "runs-on": "ubuntu-latest",
+      "strategy": {
+        "fail-fast": false,
+        "matrix": {
+          "python-version": ["3.11", "3.12", "3.13"]
+        }
+      },
+      "steps": [
+        {
+          "name": "Check out repository",
+          "uses": "actions/checkout@v4"
+        },
+        {
+          "name": "Set up Python",
+          "uses": "actions/setup-python@v5",
+          "with": {
+            "python-version": "${{ matrix.python-version }}"
+          }
+        },
+        {
+          "name": "Parse workflow syntax",
+          "run": "python3 -m json.tool .github/workflows/ci.yml >/dev/null"
+        },
+        {
+          "name": "Validate repository contracts",
+          "run": "python3 tools/ntnb.py validate --root ."
+        },
+        {
+          "name": "Run focused tests",
+          "run": "python3 -m unittest discover -s tests -v"
+        }
+      ]
+    }
+  }
+}

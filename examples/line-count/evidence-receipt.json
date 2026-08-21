@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "record_type": "evidence-receipt",
+  "id": "evidence-20260821-bounded-line-count",
+  "created_at": "2026-08-21T13:20:00Z",
+  "project_id": "no-tool-no-blocker",
+  "parent_goal_id": "goal-worked-example",
+  "gap_id": "gap-20260821-bounded-line-count",
+  "tool_id": "tool-example-line-count",
+  "question": "Can a standard-library CLI deterministically count LF-delimited lines in this bounded UTF-8 fixture without overwriting an existing report?",
+  "observed_answer": true,
+  "status": "pass",
+  "execution": {
+    "command": "python3 examples/line-count/tool/line_count.py --input examples/line-count/fixtures/three-lines.txt --output examples/line-count/expected/report.json --max-bytes 1024",
+    "cwd": ".",
+    "started_at": "2026-08-21T13:20:00Z",
+    "environment": "Python 3.14.6 on Linux x86_64; standard library only",
+    "exit_code": 0
+  },
+  "artifacts": [
+    {
+      "role": "implementation",
+      "path": "examples/line-count/tool/line_count.py",
+      "sha256": "2a29cca9d7b74c70578777305a6369564eac43aa2641ff723fdcdf0d318f8349",
+      "bytes": 2941
+    },
+    {
+      "role": "input",
+      "path": "examples/line-count/fixtures/three-lines.txt",
+      "sha256": "27c9424d0d3a8a2ef3ec7eceb39c66a72bce9509489dab6d17b310d8cbaab8ef",
+      "bytes": 18
+    },
+    {
+      "role": "output",
+      "path": "examples/line-count/expected/report.json",
+      "sha256": "afb1af0a8ed67e43749d98a865b817ccd37ff175e171a8899e6ede12c0cf43ef",
+      "bytes": 131
+    }
+  ],
+  "assertions": [
+    {
+      "claim": "The pinned 18-byte UTF-8 fixture contains exactly three LF bytes.",
+      "evidence": "examples/line-count/expected/report.json field lf_line_count equals 3"
+    },
+    {
+      "claim": "Repeated clean-path runs produce bytes identical to the committed report.",
+      "evidence": "tests.test_example_tool.ExampleToolTests.test_output_is_deterministic"
+    },
+    {
+      "claim": "An existing output is preserved and the process exits 4.",
+      "evidence": "tests.test_example_tool.ExampleToolTests.test_refuses_overwrite"
+    },
+    {
+      "claim": "Oversized and invalid UTF-8 inputs fail without creating output.",
+      "evidence": "tests.test_example_tool.ExampleToolTests resource and decoding tests"
+    }
+  ],
+  "provenance": {
+    "operator": "repository-author",
+    "tool_version": "0.1.0",
+    "implementation_sha256": "2a29cca9d7b74c70578777305a6369564eac43aa2641ff723fdcdf0d318f8349",
+    "source_revision": "initial repository commit"
+  },
+  "nonclaims": [
+    "This receipt covers only the pinned fixture, implementation, command, bounds, and tested rejection cases.",
+    "It does not prove semantic line interpretation, arbitrary encodings, unbounded files, or every Python/platform combination."
+  ],
+  "reproduction": [
+    "tmp_dir=\"$(mktemp -d)\" && python3 examples/line-count/tool/line_count.py --input examples/line-count/fixtures/three-lines.txt --output \"$tmp_dir/report.json\" --max-bytes 1024 && diff -u examples/line-count/expected/report.json \"$tmp_dir/report.json\"",
+    "python3 -m unittest tests.test_example_tool -v"
+  ]
+}

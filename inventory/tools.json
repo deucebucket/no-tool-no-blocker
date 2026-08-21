@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "record_type": "tool-inventory",
+  "project_id": "no-tool-no-blocker",
+  "tools": [
+    {
+      "id": "tool-example-line-count",
+      "name": "bounded-line-count",
+      "status": "active",
+      "kind": "project-local-cli",
+      "implementation": "examples/line-count/tool/line_count.py",
+      "implementation_sha256": "2a29cca9d7b74c70578777305a6369564eac43aa2641ff723fdcdf0d318f8349",
+      "operator_card": "examples/line-count/operator-card.json",
+      "tests": ["tests/test_example_tool.py"],
+      "call": "python3 examples/line-count/tool/line_count.py --input INPUT --output OUTPUT --max-bytes N",
+      "capabilities": ["bounded-utf8-lf-line-count-to-json"],
+      "limitations": [
+        "Counts LF bytes rather than semantic text records.",
+        "Rejects non-UTF-8 input and files larger than the declared bound.",
+        "Does not overwrite an existing output."
+      ]
+    }
+  ]
+}

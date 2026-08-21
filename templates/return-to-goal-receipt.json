@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "record_type": "return-to-goal-receipt",
+  "id": "return-YYYYMMDD-replace-short-name",
+  "created_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "project_id": "replace-project-id",
+  "parent_goal_id": "goal-replace-id",
+  "gap_id": "gap-YYYYMMDD-replace-short-name",
+  "resolution_status": "returned-with-scoped-negative",
+  "binary_answer": false,
+  "tool_id": "tool-replace-id-or-none",
+  "evidence": {
+    "path": "evidence/evidence-YYYYMMDD-replace.json",
+    "sha256": "replace-with-evidence-receipt-sha256"
+  },
+  "inventory_registration": {
+    "path": "inventory/tools.json",
+    "tool_id": "tool-replace-id-or-none"
+  },
+  "remaining_limits": ["Replace with limits the parent must retain."],
+  "next_parent_action": "Replace with an exact command, decision, or artifact handoff.",
+  "artifacts": ["replace/result/path"],
+  "nonclaims": ["This return does not establish anything beyond the linked evidence."],
+  "closed_by": "replace-operator"
+}

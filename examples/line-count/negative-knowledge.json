@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "record_type": "negative-knowledge",
+  "id": "negative-20260821-wc-full-contract",
+  "as_of": "2026-08-21T13:00:00Z",
+  "project_id": "no-tool-no-blocker",
+  "gap_id": "gap-20260821-bounded-line-count",
+  "claim": "GNU coreutils wc 9.10, invoked directly on the assessment host, did not by itself expose the full scoped contract: stable JSON containing LF count, byte count, and input SHA-256; a caller-set byte cap; and exclusive new-file output.",
+  "scope": {
+    "inputs": ["examples/line-count/fixtures/three-lines.txt sha256 27c9424d0d3a8a2ef3ec7eceb39c66a72bce9509489dab6d17b310d8cbaab8ef"],
+    "versions": ["wc (GNU coreutils) 9.10"],
+    "environment": "Linux 7.0.9-ogc3.2.fc44.x86_64 x86_64 GNU/Linux",
+    "bounds": ["Inventory and option inspection plus one obvious system candidate; no exhaustive host executable scan."]
+  },
+  "basis": [
+    {
+      "path": "examples/line-count/gap-assessment.json",
+      "sha256": "2b6b74dfaa63865dc3b117798a1c4671cf58be60dfc5ed9e603e3fcab365ae8c",
+      "summary": "The assessment records the exact candidate, commands, required contract, result, search limits, and historical timing."
+    }
+  ],
+  "search_provenance": {
+    "commands": ["command -v wc", "wc --version | head -n 1", "wc --help"],
+    "paths": ["/usr/bin/wc", "inventory/tools.json"],
+    "result": "wc was present and adjacent, but its direct interface did not satisfy the combined evidence and safety contract."
+  },
+  "nonclaims": [
+    "This does not claim GNU wc is absent, broken, inaccurate, or unsuitable for ordinary use.",
+    "This does not claim a bounded wrapper around wc could not satisfy the contract.",
+    "This does not classify future coreutils versions or other environments.",
+    "This does not establish a universal tool absence."
+  ],
+  "escape_paths": [
+    {
+      "trigger": "A future wc interface or registered wrapper provides the missing JSON, SHA-256, bound, and exclusive-create behavior.",
+      "action": "Re-run the scoped fixture and no-overwrite tests, record new hashes, and supersede this finding if the complete contract passes."
+    }
+  ],
+  "supersedes": [],
+  "status": "active"
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "record_type": "tool-proposal",
+  "id": "proposal-YYYYMMDD-replace-short-name",
+  "created_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "project_id": "replace-project-id",
+  "gap_id": "gap-YYYYMMDD-replace-short-name",
+  "parent_goal_id": "goal-replace-id",
+  "decision": "investigate",
+  "selected_approach": "Replace with the smallest reuse, wire, repair, acquire, build, or investigation step.",
+  "alternatives": [
+    {
+      "name": "replace-alternative",
+      "rejected_because": "Replace with scoped evidence, cost, or risk."
+    }
+  ],
+  "success_condition": "Replace with the binary, observable success condition.",
+  "stop_conditions": ["Replace with a bounded stop condition and route."],
+  "safety": {
+    "read_roots": ["replace/read/root"],
+    "write_roots": ["replace/write/root"],
+    "max_runtime_seconds": 60,
+    "max_input_bytes": 1048576,
+    "max_concurrency": 1,
+    "network": false,
+    "overwrite": false
+  },
+  "deliverables": {
+    "implementation": "replace/tool/path",
+    "operator_card": "operator-cards/replace-tool.json",
+    "tests": ["tests/test_replace_tool.py"],
+    "evidence_receipt": "evidence/evidence-YYYYMMDD-replace.json",
+    "inventory": "inventory/tools.json"
+  },
+  "dependencies": [],
+  "risks": ["Replace with a concrete failure or misuse risk."],
+  "nonclaims": ["The proposal does not claim success before tests and evidence exist."]
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "record_type": "negative-knowledge",
+  "id": "negative-YYYYMMDD-replace-short-name",
+  "as_of": "YYYY-MM-DDTHH:MM:SSZ",
+  "project_id": "replace-project-id",
+  "gap_id": "gap-YYYYMMDD-replace-short-name",
+  "claim": "Replace with an exact negative bounded by input, revision, environment, and attempt.",
+  "scope": {
+    "inputs": ["replace input path and sha256"],
+    "versions": ["replace tool/runtime/revision"],
+    "environment": "replace environment",
+    "bounds": ["replace resource or search bound"]
+  },
+  "basis": [
+    {
+      "path": "replace/evidence/path",
+      "sha256": "replace-with-sha256",
+      "summary": "Replace with the observed result, not an inference beyond it."
+    }
+  ],
+  "search_provenance": {
+    "commands": ["replace exact command"],
+    "paths": ["replace/inspected/path"],
+    "result": "Replace exact result."
+  },
+  "nonclaims": [
+    "This does not claim universal impossibility.",
+    "This does not classify untested versions, inputs, or environments."
+  ],
+  "escape_paths": [
+    {
+      "trigger": "Replace with a changed fact or new evidence.",
+      "action": "Replace with the next bounded attempt."
+    }
+  ],
+  "supersedes": [],
+  "status": "active"
+}

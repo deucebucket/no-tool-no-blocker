@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "record_type": "operator-card",
+  "tool_id": "tool-replace-id",
+  "name": "replace-tool-name",
+  "version": "0.1.0",
+  "status": "proposed",
+  "implementation": {
+    "path": "replace/tool/path",
+    "sha256": "replace-with-implementation-sha256"
+  },
+  "purpose": "Replace with the single capability this tool provides.",
+  "answers_question": "Can this tool answer the gap's exact binary question?",
+  "runtime": {
+    "command": "replace-runtime",
+    "requirements": ["Replace with runtime and minimum version."],
+    "dependencies": ["standard-library-only or list exact dependencies"],
+    "network": false
+  },
+  "usage": {
+    "synopsis": "replace-runtime replace/tool/path --input INPUT --output OUTPUT",
+    "working_directory": "project root",
+    "examples": ["replace with a complete copyable command"]
+  },
+  "inputs": [
+    {
+      "name": "INPUT",
+      "format": "replace-format",
+      "encoding": "replace-encoding-or-binary",
+      "mode": "read-only",
+      "limits": "Replace with explicit limits."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "OUTPUT",
+      "format": "replace-format",
+      "creation": "new-file-only",
+      "deterministic": true
+    }
+  ],
+  "exit_codes": {
+    "0": "Question answered and output verified.",
+    "2": "Usage or contract error.",
+    "3": "Input, bound, or decoding error.",
+    "4": "Output exists; no overwrite performed."
+  },
+  "resource_bounds": {
+    "max_runtime_seconds": 60,
+    "max_input_bytes": 1048576,
+    "max_concurrency": 1
+  },
+  "side_effects": ["Creates only the explicit output path after validation."],
+  "overwrite_policy": "refuse",
+  "determinism": "Replace with the exact conditions under which output bytes repeat.",
+  "provenance": "Replace with how implementation, input, and output identity are recorded.",
+  "tests": ["tests/test_replace_tool.py"],
+  "limitations": ["Replace with a known limitation."],
+  "nonclaims": ["Replace with what successful use does not prove."]
+}

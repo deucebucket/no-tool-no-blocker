@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "record_type": "gap-assessment",
+  "id": "gap-YYYYMMDD-replace-short-name",
+  "created_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "project_id": "replace-project-id",
+  "parent_goal": {
+    "id": "goal-replace-id",
+    "objective": "Replace with the parent objective.",
+    "acceptance_test": "Replace with the parent's acceptance test.",
+    "return_artifact": "Replace with the artifact or decision the parent needs."
+  },
+  "question": "Can the smallest bounded probe answer exactly one yes-or-no question?",
+  "required_capability": "replace-capability-id",
+  "state": "unknown",
+  "scope": {
+    "inputs": [
+      {
+        "path": "replace/input/path",
+        "sha256": "replace-with-sha256-when-bytes-affect-claim"
+      }
+    ],
+    "exclusions": ["Replace with what this assessment does not cover."],
+    "environment": "Replace with relevant platform/runtime/revision.",
+    "max_runtime_seconds": 60,
+    "max_input_bytes": 1048576,
+    "max_concurrency": 1,
+    "network": false
+  },
+  "inventory_search": {
+    "inventory_path": "inventory/tools.json",
+    "performed_at": "YYYY-MM-DDTHH:MM:SSZ",
+    "commands": ["replace with exact read-only search command"],
+    "paths": ["replace/searched/path"],
+    "candidates": [
+      {
+        "id": "candidate-replace-id",
+        "finding": "unverified"
+      }
+    ],
+    "conclusion": "Replace with the bounded search conclusion.",
+    "limitations": ["Replace with a search limit."]
+  },
+  "observations": ["Replace with a directly observed fact."],
+  "nonclaims": ["This assessment does not establish a universal absence or impossibility."],
+  "escape_paths": [
+    {
+      "trigger": "Replace with the evidence or condition that reopens this assessment.",
+      "action": "Replace with the next bounded search or probe."
+    }
+  ],
+  "status": "open"
+}
